@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafetería Pro</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+header{
+    background:#5c4033;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+nav{
+    background:#3e2723;
+    padding:15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:15px;
+    font-weight:bold;
+}
+
+.hero{
+    background:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=compress&cs=tinysrgb&w=1200');
+    background-size:cover;
+    background-position:center;
+    text-align:center;
+    color:white;
+    padding:100px 20px;
+    position:relative;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    z-index:1;
+}
+
+.hero h1, .hero p{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-size:50px;
+}
+
+.hero p{
+    font-size:20px;
+    margin-top:10px;
+}
+
+.productos{
+    padding:40px;
+}
+
+.productos h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#5c4033;
+    font-size:28px;
+}
+
+.productos h3{
+    margin:25px 0 15px;
+    color:#5c4033;
+    font-size:22px;
+    border-bottom:2px solid #6f4e37;
+    padding-bottom:5px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    display:block;
+    background-color:#f0e6dc;
+}
+
+.card h3{
+    padding:12px 10px 5px;
+    font-size:18px;
+    border:none;
+}
+
+.card p{
+    padding:0 10px 10px;
+    font-weight:bold;
+    color:#2e7d32;
+    font-size:17px;
+}
+
+.card button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#6f4e37;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+    transition:background 0.3s ease;
+}
+
+.card button:hover{
+    background:#4e342e;
+}
+
+.pedido{
+    background:white;
+    margin:30px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.item-carrito{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.controles-cantidad{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.btn-cant{
+    width:25px;
+    height:25px;
+    border:none;
+    background:#6f4e37;
+    color:white;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-eliminar{
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:4px 8px;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+#tarjeta-datos{
+    display:none;
+    background:#f8f0e6;
+    padding:15px;
+    border-radius:8px;
+    margin:10px 0;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:15px;
+}
+
+textarea{
+    background:#f9f6f2;
+}
+
+.enviar{
+    background:green;
+    color:white;
+    border:none;
+    padding:15px;
+    width:100%;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:5px;
+    transition:background 0.3s ease;
+}
+
+.enviar:hover{
+    background:darkgreen;
+}
+
+footer{
+    background:#3e2723;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header id="inicio">
+<h1>Cafetería Café & Sueños☕</h1>
+<p>Café de calidad y postres deliciosos</p>
+</header>
+
+<nav>
+<a href="#inicio">Inicio</a>
+<a href="#menu">Menú</a>
+<a href="#pedido">Pedidos</a>
+<a href="#contacto">Contacto</a>
+</nav>
+
+<section class="hero">
+<h1>Bienvenido</h1>
+<p>Haz tu pedido en línea y disfruta de nuestros productos</p>
+</section>
+
+<section id="menu" class="productos">
+
+<h2>Nuestro Menú ☕🍰</h2>
+
+<h3>Cafés Calientes</h3>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=compress&cs=tinysrgb&w=400" alt="Café Americano">
+<h3>Americano</h3>
+<p>$45 MXN</p>
+<button onclick="agregar('Americano',45)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=compress&cs=tinysrgb&w=400" alt="Capuchino">
+<h3>Capuchino</h3>
+<p>$60 MXN</p>
+<button onclick="agregar('Capuchino',60)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=compress&cs=tinysrgb&w=400" alt="Latte">
+<h3>Latte</h3>
+<p>$65 MXN</p>
+<button onclick="agregar('Latte',65)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=compress&cs=tinysrgb&w=400" alt="Espresso">
+<h3>Espresso</h3>
+<p>$40 MXN</p>
+<button onclick="agregar('Espresso',40)">Agregar</button>
+</div>
+
+</div>
+
+<h3>Cafés Fríos</h3>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=compress&cs=tinysrgb&w=400" alt="Frappé de Café">
+<h3>Frappé</h3>
+<p>$80 MXN</p>
+<button onclick="agregar('Frappé',80)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=compress&cs=tinysrgb&w=400" alt="Mocha Helado">
+<h3>Mocha Helado</h3>
+<p>$75 MXN</p>
+<button onclick="agregar('Mocha Helado',75)">Agregar</button>
+</div>
+
+</div>
+
+<h3>Postres y Panadería</h3>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=compress&cs=tinysrgb&w=400" alt="Pastel de Chocolate">
+<h3>Pastel de Chocolate</h3>
+<p>$70 MXN</p>
+<button onclick="agregar('Pastel de Chocolate',70)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=compress&cs=tinysrgb&w=400" alt="Cheesecake">
+<h3>Cheesecake</h3>
+<p>$75 MXN</p>
+<button onclick="agregar('Cheesecake',75)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=compress&cs=tinysrgb&w=400" alt="Brownie">
+<h3>Brownie</h3>
+<p>$50 MXN</p>
+<button onclick="agregar('Brownie',50)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=compress&cs=tinysrgb&w=400" alt="Croissant">
+<h3>Croissant</h3>
+<p>$35 MXN</p>
+<button onclick="agregar('Croissant',35)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=compress&cs=tinysrgb&w=400" alt="Galletas Artesanales">
+<h3>Galletas Artesanales</h3>
+<p>$30 MXN</p>
+<button onclick="agregar('Galletas Artesanales',30)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=compress&cs=tinysrgb&w=400" alt="Muffin de Vainilla">
+<h3>Muffin de Vainilla</h3>
+<p>$45 MXN</p>
+<button onclick="agregar('Muffin de Vainilla',45)">Agregar</button>
+</div>
+
+</div>
+
+</section>
+
+<section id="pedido" class="pedido">
+
+<h2>🛒 Realizar Pedido</h2>
+
+<input type="text" id="nombre" placeholder="Nombre completo">
+
+<input type="text" id="direccion" placeholder="Dirección de entrega">
+
+<div id="carrito-lista" style="margin:15px 0;"></div>
+
+<h3 id="total">Total: $0 MXN</h3>
+
+<br>
+
+<label>Método de pago:</label>
+<select id="metodo-pago" onchange="mostrarDatosTarjeta()">
+    <option value="efectivo">💵 Pago en efectivo al recibir</option>
+    <option value="tarjeta">💳 Pago con tarjeta de crédito / débito</option>
+</select>
+
+<div id="tarjeta-datos">
+    <input type="text" placeholder="Número de tarjeta (16 dígitos)" maxlength="16">
+    <div style="display:flex; gap:10px;">
+        <input type="text" placeholder="MM/AA" maxlength="5" style="width:50%;">
+        <input type="text" placeholder="CVV" maxlength="4" style="width:50%;">
+    </div>
+</div>
+
+<br>
+
+<button class="enviar" onclick="enviarPedido()">
+Confirmar Pedido
+</button>
+
+</section>
+
+<footer id="contacto">
+<h3>Contacto</h3>
+<p>📍 Café & Sueños</p>
+<p>📞 923-139-5231</p>
+<p>✉ café&sueños@gmail.com</p>
+<p>© 2026 Café & Sueños</p>
+</footer>
+
+<script>
+
+let total = 0;
+let pedido = [];
+
+function agregar(nombre, precio){
+    let existe = pedido.find(p => p.nombre === nombre);
+    if(existe){
+        existe.cantidad++;
+    } else {
+        pedido.push({nombre, precio, cantidad:1});
+    }
+    actualizarCarrito();
+}
+
+function cambiarCantidad(nombre, cambio){
+    let item = pedido.find(p => p.nombre === nombre);
+    if(item){
+        item.cantidad += cambio;
+        if(item.cantidad <= 0){
+            eliminarProducto(nombre);
+        }
+    }
+    actualizarCarrito();
+}
+
+function eliminarProducto(nombre){
+    pedido = pedido.filter(p => p.nombre !== nombre);
+    actualizarCarrito();
+}
+
+function actualizarCarrito(){
+    total = 0;
+    let contenedor = document.getElementById("carrito-lista");
+    contenedor.innerHTML = "";
+
+    if(pedido.length === 0){
+        contenedor.innerHTML = "<p>El carrito está vacío</p>";
+    } else {
+        pedido.forEach(item => {
+            let subtotal = item.precio * item.cantidad;
+            total += subtotal;
+            contenedor.innerHTML += `
+                <div class="item-carrito">
+                    <span>${item.nombre}</span>
+                    <div class="controles-cantidad">
+                        <button class="btn-cant" onclick="cambiarCantidad('${item.nombre}', -1)">−</button>
+                        <span>${item.cantidad}</span>
+                        <button class="btn-cant" onclick="cambiarCantidad('${item.nombre}', 1)">+</button>
+                        <button class="btn-eliminar" onclick="eliminarProducto('${item.nombre}')">🗑️</button>
+                    </div>
+                    <span>$${subtotal}</span>
+                </div>
+            `;
+        });
+    }
+
+    document.getElementById("total").innerHTML = "Total: $" + total + " MXN";
+}
+
+function mostrarDatosTarjeta(){
+    let metodo = document.getElementById("metodo-pago").value;
+    document.getElementById("tarjeta-datos").style.display = metodo === "tarjeta" ? "block" : "none";
+}
+
+function enviarPedido(){
+    let nombre = document.getElementById("nombre").value.trim();
+    let direccion = document.getElementById("direccion").value.trim();
+    let metodo = document.getElementById("metodo-pago").value;
+
+    if(nombre === "" || direccion === ""){
+        alert("⚠️ Por favor completa todos los datos.");
+        return;
+    }
+
+    if(pedido.length === 0){
+        alert("⚠️ Tu carrito está vacío. Agrega productos antes de confirmar.");
+        return;
+    }
+
+    let resumen = "✅ Pedido realizado con éxito.\n\n" +
+                  "Cliente: " + nombre + "\n" +
+                  "Dirección: " + direccion + "\n" +
+                  "Método de pago: " + (metodo === "efectivo" ? "Efectivo al recibir" : "Tarjeta de crédito/débito") + "\n\n" +
+                  "--- Productos ---\n";
+
+    pedido.forEach(item => {
+        resumen += item.nombre + " ×" + item.cantidad + " → $" + (item.precio * item.cantidad) + "\n";
+    });
+
+    resumen += "\nTotal a pagar: $" + total + " MXN\n\n¡Gracias por tu compra!";
+
+    alert(resumen);
+
+    // Reiniciar carrito automáticamente
+    pedido = [];
+    total = 0;
+    document.getElementById("nombre").value = "";
+    document.getElementById("direccion").value = "";
+    document.getElementById("metodo-pago").value = "efectivo";
+    document.getElementById("tarjeta-datos").style.display = "none";
+    actualizarCarrito();
+}
+
+</script>
+
+</body>
+</html>
